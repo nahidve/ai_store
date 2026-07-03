@@ -2,7 +2,7 @@ import { Prisma, ProductStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export const productRepository = {
-  create(data: Prisma.ProductCreateInput) {
+  create(data: Prisma.ProductUncheckedCreateInput) {
     return prisma.product.create({
       data,
     });
