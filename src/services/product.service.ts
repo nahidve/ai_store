@@ -33,4 +33,8 @@ export const productService = {
   async getPendingProducts() {
     return productRepository.findPending();
   },
+
+  async getProductBySlug(slug: string) {
+    return productRepository.findBySlug(slug);
+  },
 };

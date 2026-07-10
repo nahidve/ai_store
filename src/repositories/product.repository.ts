@@ -10,7 +10,13 @@ export const productRepository = {
 
   findBySlug(slug: string) {
     return prisma.product.findUnique({
-      where: { slug },
+      where: {
+        slug,
+      },
+      include: {
+        vendor: true,
+        category: true,
+      },
     });
   },
 
