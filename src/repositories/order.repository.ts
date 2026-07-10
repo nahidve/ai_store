@@ -33,4 +33,31 @@ export const orderRepository = {
       },
     });
   },
+
+  findPendingOrder(orderId: string, buyerId: string) {
+    return prisma.productOrder.findFirst({
+      where: {
+        id: orderId,
+        buyerId,
+        status: "PENDING",
+      },
+      include: {
+        product: true,
+      },
+    });
+  },
+
+  updateStatus(
+    id: string,
+    status: "PENDING" | "PAID" | "CANCELLED" | "REFUNDED",
+  ) {
+    return prisma.productOrder.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+    });
+  },
 };

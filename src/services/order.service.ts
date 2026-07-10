@@ -16,4 +16,8 @@ export const orderService = {
   async getOrder(id: string) {
     return orderRepository.findById(id);
   },
+
+  async markPaid(orderId: string) {
+    return orderRepository.updateStatus(orderId, "PAID");
+  },
 };
