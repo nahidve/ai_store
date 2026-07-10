@@ -6,8 +6,23 @@ export const createProductSchema = z.object({
   description: z.string().min(20),
   priceInPaise: z.number().int().min(0),
   categoryId: z.string(),
-  websiteUrl: z.string().url().optional().or(z.literal("")),
-  demoUrl: z.string().url().optional().or(z.literal("")),
+  websiteUrl: z
+    .string()
+    .trim()
+    .optional()
+    .transform((v) => v || "")
+    .refine((v) => v === "" || /^https?:\/\/.+/.test(v), {
+      message: "Invalid URL",
+    }),
+
+  demoUrl: z
+    .string()
+    .trim()
+    .optional()
+    .transform((v) => v || "")
+    .refine((v) => v === "" || /^https?:\/\/.+/.test(v), {
+      message: "Invalid URL",
+    }),
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;

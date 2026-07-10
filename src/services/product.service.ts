@@ -29,4 +29,8 @@ export const productService = {
   async getMarketplaceProducts() {
     return productRepository.findApproved();
   },
+
+  async getPendingProducts() {
+    return productRepository.findPending();
+  },
 };
