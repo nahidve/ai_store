@@ -27,6 +27,14 @@ export const paymentRepository = {
     });
   },
 
+  findByProductOrderId(productOrderId: string) {
+    return prisma.payment.findUnique({
+      where: {
+        productOrderId,
+      },
+    });
+  },
+
   markPaid(id: string, razorpayPaymentId: string) {
     return prisma.payment.update({
       where: {

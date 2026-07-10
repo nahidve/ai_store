@@ -19,6 +19,10 @@ export const paymentService = {
     return paymentRepository.findByOrderId(productOrderId);
   },
 
+  async findByProductOrderId(productOrderId: string) {
+    return paymentRepository.findByProductOrderId(productOrderId);
+  },
+
   async markPaid(id: string, razorpayPaymentId: string) {
     return paymentRepository.markPaid(id, razorpayPaymentId);
   },

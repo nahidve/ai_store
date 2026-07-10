@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-
 import { getCurrentUser } from "@/lib/current-user";
-
 import { razorpay } from "@/lib/razorpay";
-
 import { orderRepository } from "@/repositories/order.repository";
-
 import { paymentService } from "@/services/payment.service";
 
 export async function POST(request: Request) {
@@ -36,6 +32,24 @@ export async function POST(request: Request) {
           status: 404,
         },
       );
+    }
+
+    const existingPayment = await paymentService.findByProductOrderId(order.id);
+
+    if (existingPayment) {
+      return NextResponse.json({
+        success: true,
+
+        paymentId: existingPayment.id,
+
+        razorpayOrderId: existingPayment.razorpayOrderId,
+
+        amount: existingPayment.amountInPaise,
+
+        currency: "INR",
+
+        key: process.env.RAZORPAY_KEY_ID,
+      });
     }
 
     const razorpayOrder = await razorpay.orders.create({
