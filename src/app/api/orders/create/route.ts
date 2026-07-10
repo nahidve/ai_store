@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-
 import { getCurrentUser } from "@/lib/current-user";
-
 import { productRepository } from "@/repositories/product.repository";
-
 import { orderService } from "@/services/order.service";
+import { purchaseService } from "@/services/purchase.service";
 
 export async function POST(request: Request) {
   try {
@@ -22,7 +20,6 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-
     const product = await productRepository.findApprovedById(body.productId);
 
     if (!product) {
@@ -32,6 +29,34 @@ export async function POST(request: Request) {
         },
         {
           status: 404,
+        },
+      );
+    }
+
+    const existingOrder = await orderService.getExistingPending(
+      user.id,
+      product.id,
+    );
+
+    if (existingOrder) {
+      return NextResponse.json({
+        success: true,
+        order: existingOrder,
+      });
+    }
+
+    const existingPurchase = await purchaseService.hasAccess(
+      user.id,
+      product.id,
+    );
+
+    if (existingPurchase) {
+      return NextResponse.json(
+        {
+          message: "Already purchased",
+        },
+        {
+          status: 400,
         },
       );
     }

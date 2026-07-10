@@ -30,7 +30,7 @@ export default async function ProductPage({
           <p>Price: ₹{(product.priceInPaise / 100).toFixed(2)}</p>
 
           <div className="mt-6">
-            <BuyButton productId={product.id} />
+            <BuyButton productId={product.id} title={product.title} />
           </div>
         </div>
 

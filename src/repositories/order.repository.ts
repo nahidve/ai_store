@@ -47,6 +47,16 @@ export const orderRepository = {
     });
   },
 
+  findPendingByBuyerAndProduct(buyerId: string, productId: string) {
+    return prisma.productOrder.findFirst({
+      where: {
+        buyerId,
+        productId,
+        status: "PENDING",
+      },
+    });
+  },
+
   updateStatus(
     id: string,
     status: "PENDING" | "PAID" | "CANCELLED" | "REFUNDED",

@@ -17,6 +17,10 @@ export const orderService = {
     return orderRepository.findById(id);
   },
 
+  async getExistingPending(buyerId: string, productId: string) {
+    return orderRepository.findPendingByBuyerAndProduct(buyerId, productId);
+  },
+
   async markPaid(orderId: string) {
     return orderRepository.updateStatus(orderId, "PAID");
   },
