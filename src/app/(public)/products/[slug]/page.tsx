@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-
 import { productService } from "@/services/product.service";
+import { BuyButton } from "@/components/products/buy-button";
 
 export default async function ProductPage({
   params,
@@ -26,10 +26,12 @@ export default async function ProductPage({
 
         <div className="mt-8">
           <p>Category: {product.category.name}</p>
-
           <p>Vendor: {product.vendor.name}</p>
-
           <p>Price: ₹{(product.priceInPaise / 100).toFixed(2)}</p>
+
+          <div className="mt-6">
+            <BuyButton productId={product.id} />
+          </div>
         </div>
 
         <div className="mt-8">

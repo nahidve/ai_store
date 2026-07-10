@@ -93,4 +93,48 @@ export const productRepository = {
       },
     });
   },
+
+  countByVendor(vendorId: string) {
+    return prisma.product.count({
+      where: {
+        vendorId,
+      },
+    });
+  },
+
+  countPendingByVendor(vendorId: string) {
+    return prisma.product.count({
+      where: {
+        vendorId,
+        status: "PENDING",
+      },
+    });
+  },
+
+  countApprovedByVendor(vendorId: string) {
+    return prisma.product.count({
+      where: {
+        vendorId,
+        status: "APPROVED",
+      },
+    });
+  },
+
+  countRejectedByVendor(vendorId: string) {
+    return prisma.product.count({
+      where: {
+        vendorId,
+        status: "REJECTED",
+      },
+    });
+  },
+
+  findApprovedById(id: string) {
+    return prisma.product.findFirst({
+      where: {
+        id,
+        status: ProductStatus.APPROVED,
+      },
+    });
+  },
 };
